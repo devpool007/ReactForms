@@ -1,33 +1,18 @@
-import { useState } from "react";
+import { useRef } from "react";
 export default function Login() {
-  // const [enteredEmail, setEnteredEmail] = useState('');
-  // const [enteredPassword, setEnteredPassword] = useState('');
-  const [enteredValues, setEnteredValues] = useState({
-    email: "",
-    password: "",
-  });
+  const emailRef = useRef();
+  const passwordRef = useRef();
 
   function handleSubmit(event) {
     event.preventDefault();
-    console.log(enteredValues);
+    const email = emailRef.current.value;
+    const password = passwordRef.current.value;
+    
+    if (email && password) {
+      // Perform login action here
+      console.log("Logging in with", { email, password });
+    }
   }
-
-  function handleInputChange(identifier, value) {
-    setEnteredValues((prevState) => {
-      return {
-        ...prevState,
-        [identifier]: value,
-      };
-    });
-  }
-
-  // function handleEmailChange(event) {
-  //   setEnteredEmail(event.target.value);
-  // }
-
-  // function handlePasswordChange(event) {
-  //   setEnteredPassword(event.target.value);
-  // }
 
   return (
     <form onSubmit={handleSubmit}>
@@ -36,23 +21,16 @@ export default function Login() {
       <div className="control-row">
         <div className="control no-margin">
           <label htmlFor="email">Email</label>
-          <input
-            id="email"
-            type="email"
-            name="email"
-            onChange={(Event) => handleInputChange("email", Event.target.value)}
-            value={enteredValues.email}
-          />
+          <input id="email" type="email" name="email" ref={emailRef} />
         </div>
 
         <div className="control no-margin">
           <label htmlFor="password">Password</label>
           <input
             id="password"
-            type="password" 
+            type="password"
             name="password"
-            onChange={(Event) => handleInputChange("password", Event.target.value)}
-            value={enteredValues.password}
+            ref={passwordRef}
           />
         </div>
       </div>
